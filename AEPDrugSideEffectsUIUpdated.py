@@ -40,7 +40,7 @@ def main():
         age = st.number_input('Age', min_value=0, max_value=100, value=25)
         sex = st.selectbox('Gender', options=np.append(df['Sex'].unique(), 'Other'))
         indications = st.selectbox('Indicated for', options=df['Indicated for'].unique())
-        contraindications = st.selectbox('Concmittant medications', options=df['Concmittant medications'].dropna().unique())
+        contraindications = st.selectbox('Concomitant medications', options=df['Concmittant medications'].dropna().unique())
         medical_history = st.selectbox('Medical History', options=df['Medical History'].unique())
         st.subheader("Prescribing Medication")
         medications = st.selectbox('Prescribing Medication', options=df['Prescribing Medication'].unique())
@@ -72,7 +72,7 @@ def main():
             st.markdown(f"**Rare Side effects:** {y_pred_rare[0]}")
             
             if y_pred_adverse[0] == 1:
-                st.markdown("<div style='background-color: #FF7F7F; padding: 10px; border-radius: 5px; color: black'><strong>The patient is likely to experience an adverse event of severe life-threatening pancreatitis and low blood sugar.</strong></div>", unsafe_allow_html=True)
+                st.markdown("<div style='background-color: #FF7F7F; padding: 10px; border-radius: 5px; color: black'><strong>The patient is likely to experience adverse event(s) of severe life-threatening pancreatitis and/or low blood sugar.</strong></div>", unsafe_allow_html=True)
             else:
                 st.markdown("<div style='background-color: #90EE90; padding: 10px; border-radius: 5px'><strong>The patient is unlikely to experience an adverse event.</strong></div>", unsafe_allow_html=True)
             
