@@ -2,6 +2,7 @@ streamlit
 pandas 
 numpy
 pickle
+sklearn
 sklearn.preprocessing
 sklearn.compose
 time
