@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import sklearn
 from sklearn.preprocessing import LabelEncoder, StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 import time
@@ -39,12 +38,12 @@ def main():
         # User inputs
         st.subheader("Patient Data")
         age = st.number_input('Age', min_value=0, max_value=100, value=25)
-        sex = st.selectbox('Sex', options=df['Sex'].unique())
+        sex = st.selectbox('Gender', options=np.append(df['Sex'].unique(), 'Other'))
         indications = st.selectbox('Indicated for', options=df['Indicated for'].unique())
         contraindications = st.selectbox('Concmittant medications', options=df['Concmittant medications'].dropna().unique())
         medical_history = st.selectbox('Medical History', options=df['Medical History'].unique())
         st.subheader("Prescribing Medication")
-        medications = st.selectbox('', options=df['Prescribing Medication'].unique())
+        medications = st.selectbox('Prescribing Medication', options=df['Prescribing Medication'].unique())
 
         # Transform the inputs using the preprocessor
         X = pd.DataFrame({
@@ -60,6 +59,7 @@ def main():
 
         # Make predictions and measure the time it takes
         if st.button("Predict"):
+            st.markdown("**Predict**")
             start_time = time.time()
             y_pred_common = clf_common.predict(X_transformed)
             y_pred_rare = clf_rare.predict(X_transformed)
@@ -72,10 +72,11 @@ def main():
             st.markdown(f"**Rare Side effects:** {y_pred_rare[0]}")
             
             if y_pred_adverse[0] == 1:
-                st.markdown("<div style='background-color: red; padding: 10px; border-radius: 5px'><strong>The patient is likely to experience an adverse event.</strong></div>", unsafe_allow_html=True)
+                st.markdown("<div style='background-color: #FF7F7F; padding: 10px; border-radius: 5px; color: black'><strong>The patient is likely to experience an adverse event of severe life-threatening pancreatitis and low blood sugar.</strong></div>", unsafe_allow_html=True)
             else:
                 st.markdown("<div style='background-color: #90EE90; padding: 10px; border-radius: 5px'><strong>The patient is unlikely to experience an adverse event.</strong></div>", unsafe_allow_html=True)
             
+            st.markdown(f"**Data Source: drugs.com**")
             st.markdown(f"**Time taken to predict: {prediction_time} seconds**") 
             st.markdown(f"**Faster than a lightning bolt**")
 
@@ -84,10 +85,9 @@ def main():
             st.bar_chart(chart_data)
 
             # Get user feedback 
-            feedback = st.text_input("Please provide your feedback:")
-            
-            if feedback:
-                st.write("Thank you for your feedback!")
+        feedback = st.text_input("Please provide your feedback:")
+        if feedback:
+            st.write("Thank you for your feedback!")
 
     elif page == "About us":
         st.title("About Us")
