@@ -3,9 +3,7 @@ pandas
 numpy
 pickle
 scikit-learn
-sklearn==0.24.1
-sklearn.preprocessing
-sklearn.compose
+sklearn
 time
 streamlit_player
 lime
