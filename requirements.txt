@@ -4,4 +4,3 @@ numpy
 scikit-learn==0.24.1
 streamlit_player
 lime
-lime.lime_tabular
